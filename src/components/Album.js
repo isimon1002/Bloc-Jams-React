@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import albumData from './../data/albums';
+import PlayerBar from './PlayerBar'
 
 class Album extends Component {
   constructor(props) {
@@ -41,10 +42,21 @@ handleSongClick(song) {
   }
   else {
     if (!isSameSong){
-       this.setSong(song); 
+       this.setSong(song);
     }
     this.play();
   }
+}
+
+handlePrevClick(){
+  const currentIndex = this.state.album.songs.findIndex(song => this.state.currentSong === song);
+  var newIndex = currentIndex - 1;
+  if(newIndex < 0){
+    newIndex = this.state.album.songs.length-1
+  }
+  const newSong = this.state.album.songs[newIndex];
+  this.setSong(newSong);
+  this.play(newSong);
 }
 
 
@@ -81,6 +93,12 @@ handleSongClick(song) {
           )}
           </tbody>
         </table>
+        <PlayerBar
+          isPlaying={this.state.isPlaying}
+          currentSong={this.state.currentSong}
+          handleSongClick={() => this.handleSongClick(this.state.currentSong)}
+          handlePrevClick={() => this.handlePrevClick()}
+        />
       </section>
     );
   }
