@@ -97,6 +97,18 @@ handleTimeChange(e) {
   this.setState({ currentTime: newTime });
 }
 
+formatTime(duration){
+  var minutes = Math.floor(duration/60)
+  var seconds = (duration - (minutes * 60)).toFixed(0)
+  var formatSeconds = ("0" + seconds).slice(-2)
+  if(typeof duration === "number"){
+    return minutes + ":" + formatSeconds
+  }
+  else {
+    return "-:--"
+  }
+}
+
   render() {
     return (
       <section className="album">
@@ -125,7 +137,7 @@ handleTimeChange(e) {
                 </button>
               </td>
               <td className="song-title">{song.title}</td>
-              <td className="song-duration">{song.duration}</td>
+              <td className="song-duration">{this.formatTime(song.duration)}</td>
             </tr>
           )}
           </tbody>
@@ -139,6 +151,7 @@ handleTimeChange(e) {
           currentTime={this.audioElement.currentTime}
           duration={this.audioElement.duration}
           handleTimeChange={(e) => this.handleTimeChange(e)}
+          formatTime={(duration) => this.formatTime(duration)}
         />
       </section>
     );
