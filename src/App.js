@@ -6,10 +6,10 @@ import Album from './components/Album';
 class App extends Component {
   render() {
     return (
-      <div className="App">
+      <div className="App" >
         <header>
           <nav>
-            <Link to='/'>Landing</Link> <Link to='/library'>Library</Link>
+            <Link lassName="link1" to='/'>Landing</Link> <Link to='/library'>Library</Link>
           </nav>
           <h1>Bloc Jams</h1>
         </header>

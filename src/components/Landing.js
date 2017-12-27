@@ -1,7 +1,9 @@
 import React from 'react';
+import './../styles/Landing.css'
 
 const Landing = () => (
   <section className="landing">
+    <img className = "logo" src={'/assets/images/album_covers/bloc_jams_logo.png'} />
     <h1 className="hero-title">Turn the music up!</h1>
     <section className="selling-points">
       <div className="point">

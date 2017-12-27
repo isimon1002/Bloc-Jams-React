@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import albumData from './../data/albums';
 import PlayerBar from './PlayerBar'
+import './../styles/PlayerBar.css'
 
 class Album extends Component {
   constructor(props) {
@@ -15,11 +16,14 @@ class Album extends Component {
     currentSong: album.songs[0],
     currentTime: 0,
     duration: album.songs[0].duration,
-    isPlaying: false
+    isPlaying: false,
+    volume: .5
+
   };
 
   this.audioElement = document.createElement('audio');
   this.audioElement.src = album.songs[0].audioSrc;
+  this.audioElement.volume = this.state.volume;
 }
 
 play() {
@@ -97,6 +101,12 @@ handleTimeChange(e) {
   this.setState({ currentTime: newTime });
 }
 
+handleVolumeChange(e) {
+  const newVolume = e.target.value;
+  this.audioElement.volume = newVolume;
+  this.setState({ volume: newVolume });
+}
+
 formatTime(duration){
   var minutes = Math.floor(duration/60)
   var seconds = (duration - (minutes * 60)).toFixed(0)
@@ -131,11 +141,10 @@ formatTime(duration){
             <tr className={song} key={index} onClick={() => this.handleSongClick(song)} >
               <td className="song-actions">
                 <button>
-                  <span className="song-number">{index+1 }</span>
-                  <span className="ion-play"></span>
-                  <span className="ion-pause"></span>
+                  <span className={this.state.currentSong == song && this.state.isPlaying? 'ion-pause' : 'ion-play'}></span>
                 </button>
               </td>
+              <td className="song-number">{index+1 }</td>
               <td className="song-title">{song.title}</td>
               <td className="song-duration">{this.formatTime(song.duration)}</td>
             </tr>
@@ -152,6 +161,7 @@ formatTime(duration){
           duration={this.audioElement.duration}
           handleTimeChange={(e) => this.handleTimeChange(e)}
           formatTime={(duration) => this.formatTime(duration)}
+          handleVolumeChange={(e) => this.handleVolumeChange(e)}
         />
       </section>
     );
